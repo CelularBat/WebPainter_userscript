@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example Page MagicCanvas</title>
+
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          background-color: #fff;
+          margin: 0;
+          padding: 0;
+          min-height: 1000px;
+      }
+
+      .logo {
+            display: grid;
+            place-content: center;
+          margin-top: 200px;
+      }
+
+      .search-container {
+          margin-top: 20px;
+      }
+
+      .search-bar {
+          width: 500px;
+          padding: 10px;
+          font-size: 16px;
+          border-radius: 25px;
+          border: 1px solid #dcdcdc;
+      }
+
+      .buttons-container {
+          margin-top: 20px;
+      }
+
+      .button {
+          padding: 10px 20px;
+          font-size: 14px;
+          border-radius: 25px;
+          border: none;
+          background-color: #f8f8f8;
+          cursor: pointer;
+          margin: 5px;
+          transition: background-color 0.3s;
+      }
+
+      .button:hover {
+          background-color: #f1f1f1;
+      }
+
+      .feeling-lucky {
+          background-color: #ffcc00;
+      }
+
+      .feeling-lucky:hover {
+          background-color: #ffb300;
+      }
+  </style>
+
+  </head>
+  <body>
+    
+    <div class="header">
+       <h1>Site Example for MagicCanvas</h1>
+    </div>
+
+<div class="logo">
+      <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Google Logo">
+  </div>
+
+
+  <div class="search-container">
+      <input type="text" class="search-bar" placeholder="Search Google or type a URL">
+  </div>
+
+  <div class="buttons-container">
+      <button class="button">Google Search</button>
+      <button class="button feeling-lucky">I'm Feeling Lucky</button>
+  </div>
+
+  <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
