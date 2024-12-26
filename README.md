@@ -17,6 +17,7 @@ Simply import WebPainter.user.js into extension !
 ## How it's made?
 
 This is ReactJS Project, with integrated Imba applet ,written for efficiently drawing on the overlay. Imba is a programming language created on top of Javascript.
+
 **Credits:** this project uses component: **TailwindCSS React Color Picker** https://modall.ca/lab/tailwindcss-react-color-picker
 
 Code is compiled and converted into userscript script. Browser extension than inject that code into DOM of any site.
