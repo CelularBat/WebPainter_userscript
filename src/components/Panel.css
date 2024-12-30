@@ -3,10 +3,8 @@
     --mode-btn-color:rgba(37, 33, 0, 0.7);
 }
 
-.Panel {
+.WebPainter--Panel {
     position: fixed;
-    bottom: 10px;
-    left: 10px;
     display: flex;
     justify-content: space-between;
     background-color: var(--form-color);
@@ -16,11 +14,10 @@
     display: flex;
     align-items: center;
 
-    z-index: 999;
-    
+    z-index: 16000001;
   }
   
-  .Panel .icon-btn {
+  .WebPainter--Panel .WebPainter--icon-btn {
     background: none;
     border: none;
     color: white;
@@ -30,28 +27,27 @@
     transition: transform 0.2s ease;
   }
 
-  .Panel .mode-btn{
+  .WebPainter--Panel .WebPainter--mode-btn{
     background-color: var(--mode-btn-color);
   }
 
-  .Panel .icon-btn.mode-active{
+  .WebPainter--Panel .WebPainter--icon-btn.mode-active{
     border: 2px solid green;
   }
   
-  .Panel .icon-btn:hover {
+  .WebPainter--Panel .WebPainter--icon-btn:hover {
     transform: scale(1.2);
   }
   
-  .Panel .icon-btn:focus {
+  .WebPainter--Panel .WebPainter--icon-btn:focus {
     outline: none;
   }
   
-  .Panel .floating-panel button:not(:last-child) {
-    margin-right: 5px;
+
+  .WebPainter--ColorPicker{
+    position: fixed;
+    z-index: 16000001;
   }
-
-
-
 
   
   #ColorPicker-container{

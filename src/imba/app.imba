@@ -15,7 +15,7 @@ global.imba_prop ??= {};
 # const dpr = window.devicePixelRatio;
 
 css .overlay
-		pos:absolute top:0 zi:998 left:0 w:auto h:auto d:block bg:rgba(0,0,0,0.3)
+		pos:absolute top:0 zi:16000000 left:0 w:auto h:auto d:block bg:rgba(0,0,0,0.3)
 	&.transparent
 		bg:rgba(0,0,0,0) pointer-events: none
 	&.hidden

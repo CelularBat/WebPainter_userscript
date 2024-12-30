@@ -5,3 +5,7 @@
 #myRoot {
   position: absolute;
 }
+
+.WebPainter--displayNone{
+  display: none;
+}
