@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaTrash, FaEraser, FaPencilAlt, FaRegSquare, FaRegCircle,
-    FaPalette,FaGripVertical,FaPowerOff,FaEye,FaLowVision   } from 'react-icons/fa';
+    FaPalette,FaGripVertical,FaPowerOff,FaEye,FaLowVision,FaSquare,FaCircle   } from 'react-icons/fa';
 import './Panel.css';
 import useStatePropImba from '../hooks/useStatePropImba.jsx'
 import ColorPicker from './ColorPicker.tsx'
@@ -9,6 +9,8 @@ import classNames from 'classnames';
 
 import pencil_Icon from '../assets/Pencil-SweezyCursors.ico';
 import eraser_Icon from '../assets/Eraser-SweezyCursors.ico';
+import ModeButton from './ModeButton.jsx';
+
 
 
 
@@ -16,7 +18,7 @@ import eraser_Icon from '../assets/Eraser-SweezyCursors.ico';
 function Panel({}) {
 
     const [DrawColor,setDrawColor] = useStatePropImba("DrawColor","green");
-    const [DrawMode,setDrawMode] = useStatePropImba("DrawMode","pencil");
+    const [DrawMode,setDrawMode] = useStatePropImba("DrawMode",{mode:"pencil",option:'small'});
     const [IsDrawingOn,setIsDrawingOn] = useStatePropImba('IsDrawingOn',false);
     const [IsLayerVisible,setIsLayerVisible] = useStatePropImba('IsLayerVisible',true);
 
@@ -32,7 +34,7 @@ function Panel({}) {
 
     React.useEffect( ()=>{
       if(IsDrawingOn && IsLayerVisible){
-        if (DrawMode === "erase"){ 
+        if (DrawMode.mode === "erase"){ 
              document.documentElement.style.cursor = `url("${eraser_Icon}"),auto`; } 
         else { 
             document.documentElement.style.cursor = `url("${pencil_Icon}"),auto`;}
@@ -71,7 +73,7 @@ function PanelRender({
     const [ShowColorPicker,setShowColorPicker] = React.useState({show: false, x:0, y:0});
     const [FormPos,setFormPos] = React.useState({ x: 10, y:10});
     const [IsDraggingPanel,setIsDraggingPanel] = React.useState(false);
-
+    // ColorPicker section
     function handleClickShowColorPicker(e){
         let y = e.clientY - 320;
         if (y < 0) y = e.clientY + 30;
@@ -87,7 +89,7 @@ function PanelRender({
         setDrawColor("#"+color.hex)
         setShowColorPicker(false);
     }
-
+    //Dragging section
     const panelDiv_Ref = React.useRef(null); 
     const dragHandle_Ref = React.useRef(null); 
 
@@ -114,24 +116,30 @@ function PanelRender({
             document.removeEventListener('mousemove',draggingListener);
         }
     },[IsDraggingPanel]);
-
+    // mode buttons section
 
     const modeButtonsData=[
-        {icon: <FaEraser/>, mode:"erase"},
-        {icon: <FaPencilAlt/>, mode:"pencil"},
-        {icon: <FaRegSquare/>, mode:"square"},
-        {icon: <FaRegCircle/>, mode:"circle"}
+        {icon: <FaEraser/>, mode:"erase", 
+            options:[{name:'small',label:'small'},{name:'med',label:'med'},{name:'big',label:'big'},{name:'huge',label:'huge'}]},
+        {icon: <FaPencilAlt/>, mode:"pencil",
+            options:[{name:'tiny',label:'tiny'},{name:'small',label:'small'},{name:'med',label:'med'},{name:'big',label:'big'},{name:'huge',label:'huge'}]
+        },
+        {icon: <FaRegSquare/>, mode:"square",
+            options:[{name:"empty",label:<FaRegSquare/>},{name:'full',label:<FaSquare />}]
+        },
+        {icon: <FaRegCircle/>, mode:"circle",
+            options:[{name:"empty",label:<FaRegCircle/>},{name:'full',label:<FaCircle />}]
+        }
     ];
 
     const modeButtonsRender = modeButtonsData.map((data,idx) =>{
         return (
-            <button key={idx} name={data.mode} 
-            title={`mode : ${data.mode}`}
-            className={classNames("WebPainter--icon-btn",{ "mode-active": DrawMode === data.mode }, "mode-btn")} 
-            onClick={()=>setDrawMode(data.mode)}
+            <ModeButton key={idx} 
+            className={"WebPainter--icon-btn"} 
+            {...{data,setDrawMode,DrawMode}}
             >
                 {data.icon}
-            </button>
+            </ModeButton>
         )
     })
 

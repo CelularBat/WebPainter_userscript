@@ -7,8 +7,8 @@ const directoryPath = './dist/assets';
 const userScriptConfigPath = './dev_scripts/userScriptConfig.js';
 
 // Regular expressions to match files
-const cssPattern = /^index-[a-zA-Z0-9]+\.css$/;
-const jsPattern = /^index-[a-zA-Z0-9]+\.js$/;
+const cssPattern = /^index-[a-zA-Z0-9\-_]+\.css$/;
+const jsPattern = /^index-[a-zA-Z0-9\-_]+\.js$/;
 
 // Find files in the directory
 fs.readdir(directoryPath, (err, files) => {

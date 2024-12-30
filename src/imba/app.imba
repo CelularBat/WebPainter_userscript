@@ -23,33 +23,87 @@ css .overlay
 
 	
 
+
 tag app-main
 	# DrawMode = global.imba_prop.DrawMode
 	# DrawColor = global.imba_prop.DrawColor
 	# IsDrawingOn = global.imba_prop.IsDrawingOn
+	
 
 
 	
-	def drawErase ctx
-		ctx.globalCompositeOperation="destination-out"
-		ctx.lineWidth = 30
-
-	def drawPencil ctx
-			ctx.lineWidth = 5
-			ctx.globalCompositeOperation="source-over"
-			
-	def draw e
+	def drawErase e
 		let path = e.$path ||= new Path2D
-		path.lineTo(e.x, e.y)
 		let ctx = $canvas.getContext('2d')
-		ctx.strokeStyle = global.imba_prop.DrawColor
+		path.lineTo(e.x, e.y)
 
-		if global.imba_prop.DrawMode==="erase"
-			drawErase ctx
-		else
-			drawPencil ctx
-			
+		ctx.globalCompositeOperation="destination-out"
+		ctx.lineWidth = switch global.imba_prop.DrawMode.option
+			when "tiny" then 1
+			when "small" then 5
+			when "med" then 10
+			when "big" then 25
+			when "huge" then 45
 		ctx.stroke(path)
+
+	def drawPencil e
+		let path = e.$path ||= new Path2D
+		let ctx = $canvas.getContext('2d')
+		path.lineTo(e.x, e.y)
+
+		ctx.globalCompositeOperation="source-over"
+		ctx.strokeStyle = global.imba_prop.DrawColor
+		ctx.lineWidth = switch global.imba_prop.DrawMode.option
+			when "tiny" then 1
+			when "small" then 5
+			when "med" then 10
+			when "big" then 25
+			when "huge" then 45
+		ctx.stroke(path)
+
+	def drawRect e
+		if e.ended?
+			let ctx = $canvas.getContext('2d')
+			ctx.beginPath()
+			ctx.rect(e.x0, e.y0,e.dx,e.dy )
+			let option = global.imba_prop.DrawMode.option
+			let color = global.imba_prop.DrawColor
+			if option==="empty"
+				ctx.strokeStyle = color
+				ctx.stroke() 
+			else 
+				ctx.fillStyle = color
+				ctx.fill()
+
+	def drawElipse e
+		if e.ended?
+			let ctx = $canvas.getContext('2d')
+			let rx = Math.abs(e.dx / 2)
+			let ry = Math.abs(e.dy / 2)
+			let cx = e.x0 + (e.dx / 2) 
+			let cy = e.y0 + (e.dy / 2)
+			ctx.beginPath()
+			ctx.ellipse(cx, cy,rx,ry,0,0,Math.PI*2 )
+			let option = global.imba_prop.DrawMode.option
+			let color = global.imba_prop.DrawColor
+			if option==="empty"
+				ctx.strokeStyle = color
+				ctx.stroke() 
+			else 
+				ctx.fillStyle = color
+				ctx.fill()		
+
+	def draw e
+		let mode = global.imba_prop.DrawMode.mode
+		if mode==="erase"
+			drawErase e
+		elif mode==="pencil"
+			drawPencil e	
+		elif mode==="square"
+			drawRect e
+		elif mode==="circle"
+			drawElipse e
+
 
 	def render
 		<self.overlay

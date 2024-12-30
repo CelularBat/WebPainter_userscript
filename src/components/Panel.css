@@ -9,7 +9,7 @@
     justify-content: space-between;
     background-color: var(--form-color);
     border-radius: 10px;
-    padding: 15px 5px;
+    padding: 20px 5px;
     height: 30px;
     display: flex;
     align-items: center;
@@ -27,15 +27,39 @@
     transition: transform 0.2s ease;
   }
 
-  .WebPainter--Panel .WebPainter--mode-btn{
+  .WebPainter--mode-options{
+    display:flex;
+    flex-direction: column;
+    background-color: var(--form-color);
+    gap:5px;
+    padding: 10px;
+    border-radius: 6px;
+    color:white;
+    
+
+  }
+  .WebPainter--option-btn{
+    cursor: pointer;
+    padding: 4px 6px;
+    border-radius: 5px;
+    
+  }
+  .WebPainter--option-btn.active{
+    background: rgba(255, 255, 0, 0.726);
+  }
+  .WebPainter--option-btn:hover{
+    transform: scale(1.1);
+  }
+
+  .WebPainter--mode-btn{
     background-color: var(--mode-btn-color);
   }
 
-  .WebPainter--Panel .WebPainter--icon-btn.mode-active{
+  .WebPainter--mode-btn.active{
     border: 2px solid green;
   }
   
-  .WebPainter--Panel .WebPainter--icon-btn:hover {
+  .WebPainter--icon-btn:hover {
     transform: scale(1.2);
   }
   
@@ -47,6 +71,7 @@
   .WebPainter--ColorPicker{
     position: fixed;
     z-index: 16000001;
+    width:272px;
   }
 
   
@@ -56,6 +81,7 @@
 
   #color-value{
     color:white;
+    background-color: rgb(0 0 0 / 2.5%);
   }
 
   #ColorPicker--result-container{
