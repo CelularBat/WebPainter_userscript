@@ -1,6 +1,7 @@
 /* https://modall.ca/lab/tailwindcss-react-color-picker */
 "use client";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import './ColorPicker.css'
 
 type ClassValue =
   | ClassArray
@@ -273,55 +274,6 @@ const ColorPicker = ({ default_value = "#1C9488", handleClick }) => {
     <>
       <style
         id="slider-thumb-style"
-        dangerouslySetInnerHTML={{
-          // For the input range thumb styles. Some things are just easier to add to an external stylesheet.
-          // don't actually put this in production.
-          // Just putting this here for the sake of a single file in this example
-          __html: `
-              input[type='range']::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                width: 18px; 
-                height: 18px;
-                background: transparent;
-                border: 4px solid #FFFFFF;
-                box-shadow: 0 0 0 1px #e4e4e7; 
-                cursor: pointer;
-                border-radius: 50%;
-              }
-              input[type='range']::-moz-range-thumb {
-                width: 18px;
-                height: 18px;
-                cursor: pointer;
-                border-radius: 50%;
-                background: transparent;
-                border: 4px solid #FFFFFF;
-                box-shadow: 0 0 0 1px #e4e4e7;
-              }
-              input[type='range']::-ms-thumb {
-                width: 18px;
-                height: 18px;
-                background: transparent;
-                cursor: pointer;
-                border-radius: 50%;
-                border: 4px solid #FFFFFF;
-                box-shadow: 0 0 0 1px #e4e4e7;
-              }
-    
-              .dark input[type='range']::-webkit-slider-thumb {
-                border: 4px solid rgb(24 24 27);
-                box-shadow: 0 0 0 1px #3f3f46; 
-              }
-              .dark input[type='range']::-moz-range-thumb {
-                border: 4px solid rgb(24 24 27);
-                box-shadow: 0 0 0 1px #3f3f46; 
-              }
-              .dark input[type='range']::-ms-thumb {
-                border: 4px solid rgb(24 24 27);
-                box-shadow: 0 0 0 1px #3f3f46; 
-              }
-              `,
-        }}
       />
       <div
         style={
