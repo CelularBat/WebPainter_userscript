@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WebPainter
 // @namespace    http://tampermonkey.net/
-// @version      2024-12-25
+// @version      ${_VERSION}
 // @description  Paint on any webpage !
 // @author       CelularBat
 // @homepage     https://github.com/CelularBat/WebPainter_userscript

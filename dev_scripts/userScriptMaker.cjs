@@ -55,9 +55,12 @@ fs.readdir(directoryPath, (err, files) => {
                     return;
                 }
 
-                // Append CSS content as a comment to the JS file
+                // Append CSS content to the JS file
                 const preparedCSS = injectStyleCSS(cssContent);
                 const updatedJsContent = `${jsContent}\n\n/* Injected CSS */\n${preparedCSS}`;
+                // Update Userscript config header with version
+                configContent = configContent.replace("${_VERSION}" , process.env.npm_package_version);
+                // Append Userscript config header
                 const userScriptBody = `${configContent}\n\n${createUserScriptCode(updatedJsContent)}`;
 
                 // Get the current date and time
