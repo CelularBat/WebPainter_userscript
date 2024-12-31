@@ -174,7 +174,7 @@ function PanelRender({
             {IsLayerVisible && modeButtonsRender}
 
             <ModeButton_Single 
-            className={"WebPainter--icon-btn"} 
+            className={classNames("WebPainter--icon-btn",{'WebPainter--displayNone':!IsLayerVisible})}
             data={strokeWidthButtonData}
             setterFunc={(args)=>setDrawStyle(prev=>({...prev,strokeWidth: args.option}))}
             style={{marginLeft:'10px'}}
