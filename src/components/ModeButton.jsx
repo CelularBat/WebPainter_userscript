@@ -6,7 +6,10 @@ import classNames from 'classnames';
 function ModeButton({data,setDrawMode,DrawMode,
     children,className,...rest}) {
 
-    const [Option,setOption] = React.useState(data?.options[0].name || null);
+    const [Option,setOption] = React.useState({
+        name: data?.options[0].name || null,
+        label:  data?.options[0].label || null,
+    });
     const [ShowList,setShowList] = React.useState({show: false, x:0, y:0});
 
     function handleShowList(e){
@@ -21,16 +24,16 @@ function ModeButton({data,setDrawMode,DrawMode,
 
     function handleClick(e){
         handleShowList(e);
-        setDrawMode({mode: data.mode, option:Option})
+        setDrawMode({mode: data.mode, option:Option.name})
     }
 
 
     const optionsList = data.options.map((option,idx) => { 
-    const isOptionActive = Option === option.name;  
+    const isOptionActive = Option.name === option.name;  
       return(<button key={idx} 
         className={classNames("WebPainter--option-btn",{"active": isOptionActive})}
         onClick={ ()=>{
-            setOption(option.name);
+            setOption({name: option.name, label: option.label});
             setDrawMode((prev)=>({...prev, option: option.name}));
             setShowList(false); 
         }}
@@ -48,6 +51,7 @@ function ModeButton({data,setDrawMode,DrawMode,
             name={data.mode} 
             title={`mode : ${data.mode}`}
             onClick={handleClick}>
+                {data.iconReplace? Option.label: data.icon}
                 {children}
         </button>
 

@@ -119,15 +119,15 @@ function PanelRender({
     // mode buttons section
 
     const modeButtonsData=[
-        {icon: <FaEraser/>, mode:"erase", 
+        {icon: <FaEraser/>, mode:"erase", iconReplace:false,
             options:[{name:'small',label:'small'},{name:'med',label:'med'},{name:'big',label:'big'},{name:'huge',label:'huge'}]},
-        {icon: <FaPencilAlt/>, mode:"pencil",
+        {icon: <FaPencilAlt/>, mode:"pencil",iconReplace:false,
             options:[{name:'tiny',label:'tiny'},{name:'small',label:'small'},{name:'med',label:'med'},{name:'big',label:'big'},{name:'huge',label:'huge'}]
         },
-        {icon: <FaRegSquare/>, mode:"square",
+        {icon: <FaRegSquare/>, mode:"square",iconReplace:true,
             options:[{name:"empty",label:<FaRegSquare/>},{name:'full',label:<FaSquare />}]
         },
-        {icon: <FaRegCircle/>, mode:"circle",
+        {icon: <FaRegCircle/>, mode:"circle",iconReplace:true,
             options:[{name:"empty",label:<FaRegCircle/>},{name:'full',label:<FaCircle />}]
         }
     ];
@@ -138,7 +138,6 @@ function PanelRender({
             className={"WebPainter--icon-btn"} 
             {...{data,setDrawMode,DrawMode}}
             >
-                {data.icon}
             </ModeButton>
         )
     })
