@@ -59,7 +59,8 @@ fs.readdir(directoryPath, (err, files) => {
                 const preparedCSS = injectStyleCSS(cssContent);
                 const updatedJsContent = `${jsContent}\n\n/* Injected CSS */\n${preparedCSS}`;
                 // Update Userscript config header with version
-                configContent = configContent.replace("${_VERSION}" , process.env.npm_package_version);
+                const version = process.env.npm_package_version;
+                configContent = configContent.replace("${_VERSION}" , version);
                 // Append Userscript config header
                 const userScriptBody = `${configContent}\n\n${createUserScriptCode(updatedJsContent)}`;
 
@@ -69,7 +70,7 @@ fs.readdir(directoryPath, (err, files) => {
                 const currentTime = now.toTimeString().split(' ')[0].replace(/:/g, '-'); // HH-MM-SS
                 
                 // Updated output file name
-                const outputFileName = `WebPainter_${currentDate}_${currentTime}.user.js`;
+                const outputFileName = `WebPainter_${currentDate}_${version}.user.js`;
                 const outputPath = path.join(directoryPath, outputFileName);
 
                 fs.writeFile(outputPath, userScriptBody, 'utf8', (err) => {

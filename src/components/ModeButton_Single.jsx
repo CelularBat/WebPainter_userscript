@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 // data: {icon: <FaRegSquare/>, mode:"square", options:[{name:"fill",label:<h1>fill</h1>},{name:'empty',label:"full"}]}
 
-function ModeButton({data,setDrawMode,DrawMode,
+function ModeButton_Single({data,setterFunc,
     children,className,...rest}) {
 
     const [Option,setOption] = React.useState({
@@ -14,7 +14,6 @@ function ModeButton({data,setDrawMode,DrawMode,
 
     function handleShowList(e){
         let y = e.clientY + 30;
-       // if (y < 0) y = e.clientY + 30;
         setShowList({
             show: true,
             x: e.clientX - 10,
@@ -24,7 +23,7 @@ function ModeButton({data,setDrawMode,DrawMode,
 
     function handleClick(e){
         handleShowList(e);
-        setDrawMode({mode: data.mode, option:Option.name})
+        setterFunc({mode: data.mode, option:Option.name})
     }
 
 
@@ -34,7 +33,7 @@ function ModeButton({data,setDrawMode,DrawMode,
             className={classNames("WebPainter--option-btn",{"active": isOptionActive})}
             onClick={ ()=>{
                 setOption({name: option.name, label: option.label});
-                setDrawMode({mode: data.mode, option: option.name});
+                setterFunc({mode: data.mode, option: option.name});
                 setShowList(false); 
             }}
             >
@@ -42,12 +41,12 @@ function ModeButton({data,setDrawMode,DrawMode,
         </button>); 
     })
     
-    const isModeActive = DrawMode.mode === data.mode;
+   
   
     return (
         <>
         <button {...rest} 
-            className={classNames(className,"WebPainter--mode-btn",{"active": isModeActive})}
+            className={classNames(className,"WebPainter--mode-btn")}
             name={data.mode} 
             title={`mode : ${data.mode}`}
             onClick={handleClick}>
@@ -55,7 +54,7 @@ function ModeButton({data,setDrawMode,DrawMode,
                 {children}
         </button>
 
-        {   ShowList.show && isModeActive && (optionsList.length > 0) &&
+        {   ShowList.show  && (optionsList.length > 0) &&
             <div className='WebPainter--mode-options'
             style={{left:ShowList.x,top:ShowList.y,position:'fixed'}}
             onMouseLeave={()=>setShowList(false)}>
@@ -67,4 +66,4 @@ function ModeButton({data,setDrawMode,DrawMode,
     );
 }
 
-export default ModeButton;
+export default ModeButton_Single;

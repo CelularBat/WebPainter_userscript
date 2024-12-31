@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaTrash, FaEraser, FaPencilAlt, FaRegSquare, FaRegCircle,
-    FaPalette,FaGripVertical,FaPowerOff,FaEye,FaLowVision,FaSquare,FaCircle   } from 'react-icons/fa';
+    FaPalette,FaGripVertical,FaPowerOff,FaEye,FaLowVision,FaSquare,FaCircle,FaRegWindowMinimize   } from 'react-icons/fa';
 import './Panel.css';
 import useStatePropImba from '../hooks/useStatePropImba.jsx'
 import ColorPicker from './ColorPicker.tsx'
@@ -10,6 +10,7 @@ import classNames from 'classnames';
 import pencil_Icon from '../assets/Pencil-SweezyCursors.ico';
 import eraser_Icon from '../assets/Eraser-SweezyCursors.ico';
 import ModeButton from './ModeButton.jsx';
+import ModeButton_Single from './ModeButton_Single.jsx';
 
 
 
@@ -18,6 +19,8 @@ import ModeButton from './ModeButton.jsx';
 function Panel({}) {
 
     const [DrawColor,setDrawColor] = useStatePropImba("DrawColor","green");
+    const [DrawStyle,setDrawStyle] = useStatePropImba("DrawStyle",{color: "green", strokeWidth: "tiny"});
+    
     const [DrawMode,setDrawMode] = useStatePropImba("DrawMode",{mode:"pencil",option:'small'});
     const [IsDrawingOn,setIsDrawingOn] = useStatePropImba('IsDrawingOn',false);
     const [IsLayerVisible,setIsLayerVisible] = useStatePropImba('IsLayerVisible',true);
@@ -46,7 +49,7 @@ function Panel({}) {
 
     return (
         <PanelRender {...{
-            DrawColor,setDrawColor
+            DrawStyle,setDrawStyle
             ,DrawMode,setDrawMode
             ,IsDrawingOn,setIsDrawingOn
             ,IsLayerVisible,setIsLayerVisible
@@ -63,7 +66,7 @@ export default Panel;
 
 
 function PanelRender({
-    DrawColor,setDrawColor
+    DrawStyle,setDrawStyle
     ,DrawMode,setDrawMode
     ,IsDrawingOn,setIsDrawingOn
     ,IsLayerVisible,setIsLayerVisible
@@ -86,7 +89,7 @@ function PanelRender({
     }
 
     function handleSwitchColor(color){
-        setDrawColor("#"+color.hex)
+        setDrawStyle(prev=>({...prev,color:"#"+color.hex})) 
         setShowColorPicker(false);
     }
     //Dragging section
@@ -122,7 +125,8 @@ function PanelRender({
         {icon: <FaEraser/>, mode:"erase", iconReplace:false,
             options:[{name:'small',label:'small'},{name:'med',label:'med'},{name:'big',label:'big'},{name:'huge',label:'huge'}]},
         {icon: <FaPencilAlt/>, mode:"pencil",iconReplace:false,
-            options:[{name:'tiny',label:'tiny'},{name:'small',label:'small'},{name:'med',label:'med'},{name:'big',label:'big'},{name:'huge',label:'huge'}]
+           options: []
+            //options:[{name:'tiny',label:'tiny'},{name:'small',label:'small'},{name:'med',label:'med'},{name:'big',label:'big'},{name:'huge',label:'huge'}]
         },
         {icon: <FaRegSquare/>, mode:"square",iconReplace:true,
             options:[{name:"empty",label:<FaRegSquare/>},{name:'full',label:<FaSquare />}]
@@ -142,6 +146,17 @@ function PanelRender({
         )
     })
 
+    const strokeWidthButtonData = {
+        icon: <FaRegWindowMinimize />, mode:"line width", iconReplace:true,
+        options:[
+            {name:'tiny',label:<p style={{display:'flex'}}>1<FaRegWindowMinimize /> </p>}
+            ,{name:'small',label:<p style={{display:'flex'}}>2<FaRegWindowMinimize style={{strokeWidth:50}}/></p> }
+            ,{name:'med',label:<p style={{display:'flex'}}>3<FaRegWindowMinimize style={{strokeWidth:150}}/> </p>}
+            ,{name:'big',label:<p style={{display:'flex'}}>4<FaRegWindowMinimize style={{strokeWidth:300}}/> </p>}
+            ,{name:'huge',label:<p style={{display:'flex'}}>5<FaRegWindowMinimize style={{strokeWidth:500}}/> </p>}
+        ]
+    }
+
 
     return (
         <>
@@ -157,15 +172,26 @@ function PanelRender({
             </button>
 
             {IsLayerVisible && modeButtonsRender}
+
+            <ModeButton_Single 
+            className={"WebPainter--icon-btn"} 
+            data={strokeWidthButtonData}
+            setterFunc={(args)=>setDrawStyle(prev=>({...prev,strokeWidth: args.option}))}
+            style={{marginLeft:'10px'}}
+            >
+            </ModeButton_Single>
            
             <button id="WebPainter--color-btn" 
             className={classNames("WebPainter--icon-btn",{'WebPainter--displayNone':!IsLayerVisible})}
-            style={{  color: DrawColor }} 
+            style={{  color: DrawStyle.color }} 
             title={"pick color"}
             onClick={handleClickShowColorPicker}
             >
                 <FaPalette  />
             </button>
+
+            
+
 
             <button id="WebPainter--hide-btn" 
             className="WebPainter--icon-btn" 
@@ -199,7 +225,7 @@ function PanelRender({
         {ShowColorPicker.show && 
         <div className="WebPainter--ColorPicker"
         style={{left:ShowColorPicker.x,top:ShowColorPicker.y}}>
-            <ColorPicker handleClick={handleSwitchColor} default_value={DrawColor}/>
+            <ColorPicker handleClick={handleSwitchColor} default_value={DrawStyle.color}/>
         </div>}
         </>
     );
